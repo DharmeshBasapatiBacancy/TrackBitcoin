@@ -12,6 +12,7 @@ import com.kudos.trackbitcoin.worker.TrackBitcoinWorker
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -19,6 +20,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     private val trackBitcoinViewModel: TrackBitcoinViewModel by viewModels()
+
+    @Inject
+    lateinit var workManager: WorkManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,7 +48,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun refreshBitcoinRates() {
-        val workManager = WorkManager.getInstance(this)
 
         val constraints = Constraints.Builder()
             .setRequiredNetworkType(NetworkType.CONNECTED)
@@ -69,7 +72,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun startBitcoinRatesTracker() {
-        val workManager = WorkManager.getInstance(this)
 
         val constraints = Constraints.Builder()
             .setRequiredNetworkType(NetworkType.CONNECTED)
